@@ -92,8 +92,9 @@ El modo se activa cuando el usuario dice cosas como:
 - [x] `AGENTS.md` — reglas globales para compatibilidad con otros agentes
 - [x] `commands/*.toml` — slash commands reales: `/rubber-duck` (activar), `/duck` (cambiar intensidad), `/duck-off` (salir). Sin esto el `/` literal no funciona, solo la activación por texto
 - [x] `LICENSE` — MIT (coherente con plugin.json y SKILL.md)
-- [ ] Instalación manual verificada en Claude Code local
-- [ ] Test manual: 5 conversaciones de prueba con bugs reales
+- [x] Instalación manual verificada en Claude Code local (`npx skills add <url> --skill rubber-duck`, symlink global a `.claude/skills`)
+- [~] Test manual: 5 conversaciones de prueba con bugs reales (2 hechas, core OK: 1 pregunta/turno, cava hondo, pistas graduales, maneja respuestas ambiguas)
+- [x] **Corrección de diseño:** `description` de SKILL.md auto-disparaba con "estoy atascado" (contradecía la decisión "activación manual"). Estrechado a activación SOLO explícita (`/rubber-duck`, `/duck`, o petición explícita de modo). Sin esto la skill secuestraba peticiones normales
 
 **Entregable:** repo público en GitHub, instalable vía `npx skills add`
 
