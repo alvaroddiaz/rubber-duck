@@ -107,7 +107,7 @@ El modo se activa cuando el usuario dice cosas como:
 - [x] `evals/evals.json` — 12 casos conductuales (no exact-match, porque la skill es no determinista). Cubren: activación explícita, no-solución en turno 1, 1 pregunta/turno, espejo de idioma, no leading-answer, timing de pistas (lite/full/ultra), confirmación de aterrizaje, salida `/duck-off` + frase natural, seguridad directa
 - [x] `evals/grade.py` — grader stdlib, sin deps. Assertions deterministas (1 pregunta, sin código, idioma, salida) decididas por código; semánticas (no-solución, hay-pista, confirma) marcadas MANUAL para juez humano/LLM. Tiene `--self-check` que prueba la lógica
 - [x] `checkpoints.yaml` — gates de calidad con targets (% por gate, 100% en core y seguridad)
-- [ ] Script de benchmark: baseline (sin skill) vs rubber-duck, n=10 prompts. **Pendiente:** requiere harness que llame al modelo (API key). grade.py ya puntúa replies pegadas a mano sin API
+- [x] Script de benchmark: `evals/run_evals.py`. Corre los 12 casos contra el modelo (claude-opus-4-8), arm `--skill` vs `--baseline`. Puntúa deterministas (reusa grade.py) + juez LLM para las semánticas (`??` → `ok/XX` automático). **Para correrlo:** `pip install anthropic` + `ANTHROPIC_API_KEY` (o `ant auth login`)
 - [x] Ajuste del `SKILL.md` basado en test manual: regla de **espejo de idioma** añadida (responde en el idioma del usuario)
 
 **Entregable:** evals ejecutables + resultados publicados en README
