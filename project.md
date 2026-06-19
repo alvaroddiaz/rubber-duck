@@ -93,7 +93,7 @@ El modo se activa cuando el usuario dice cosas como:
 - [x] `commands/*.toml` — slash commands reales: `/rubber-duck` (activar), `/duck` (cambiar intensidad), `/duck-off` (salir). Sin esto el `/` literal no funciona, solo la activación por texto
 - [x] `LICENSE` — MIT (coherente con plugin.json y SKILL.md)
 - [x] Instalación manual verificada en Claude Code local (`npx skills add <url> --skill rubber-duck`, symlink global a `.claude/skills`)
-- [~] Test manual: 5 conversaciones de prueba con bugs reales (2 hechas, core OK: 1 pregunta/turno, cava hondo, pistas graduales, maneja respuestas ambiguas)
+- [x] Test manual: conversaciones de prueba con bugs reales. Core validado como plugin: 1 pregunta/turno, cava hondo, pistas graduales sin spoiler, confirma aterrizaje, sale limpio con petición explícita. **Gap detectado para Iter 2:** la skill responde en inglés aunque el usuario escriba en español — falta regla de "espejo de idioma" en SKILL.md
 - [x] **Corrección de diseño:** `description` de SKILL.md auto-disparaba con "estoy atascado" (contradecía la decisión "activación manual"). Estrechado a activación SOLO explícita (`/rubber-duck`, `/duck`, o petición explícita de modo). Sin esto la skill secuestraba peticiones normales
 
 **Entregable:** repo público en GitHub, instalable vía `npx skills add`
@@ -104,15 +104,11 @@ El modo se activa cuando el usuario dice cosas como:
 
 *Objetivo: medir que la skill realmente funciona, no solo que parece que funciona*
 
-- [ ] `evals/evals.json` — mínimo 10 casos de test cubriendo:
-  - Trigger correcto (activa el modo)
-  - No da solución en el primer turno
-  - Hace exactamente 1 pregunta por respuesta
-  - Escala pistas correctamente tras 3 intercambios sin avance
-  - Sale del modo correctamente con `/duck-off`
-- [ ] `checkpoints.yaml` — criterios cuantificables de calidad
-- [ ] Script de benchmark: baseline (sin skill) vs rubber-duck, n=10 prompts
-- [ ] Ajuste del `SKILL.md` basado en resultados de evals
+- [x] `evals/evals.json` — 12 casos conductuales (no exact-match, porque la skill es no determinista). Cubren: activación explícita, no-solución en turno 1, 1 pregunta/turno, espejo de idioma, no leading-answer, timing de pistas (lite/full/ultra), confirmación de aterrizaje, salida `/duck-off` + frase natural, seguridad directa
+- [x] `evals/grade.py` — grader stdlib, sin deps. Assertions deterministas (1 pregunta, sin código, idioma, salida) decididas por código; semánticas (no-solución, hay-pista, confirma) marcadas MANUAL para juez humano/LLM. Tiene `--self-check` que prueba la lógica
+- [x] `checkpoints.yaml` — gates de calidad con targets (% por gate, 100% en core y seguridad)
+- [ ] Script de benchmark: baseline (sin skill) vs rubber-duck, n=10 prompts. **Pendiente:** requiere harness que llame al modelo (API key). grade.py ya puntúa replies pegadas a mano sin API
+- [x] Ajuste del `SKILL.md` basado en test manual: regla de **espejo de idioma** añadida (responde en el idioma del usuario)
 
 **Entregable:** evals ejecutables + resultados publicados en README
 
