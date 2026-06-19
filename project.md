@@ -138,7 +138,7 @@ El modo se activa cuando el usuario dice cosas como:
 *Objetivo: publicación en marketplaces y visibilidad*
 
 - [ ] Submisión a [claudeskills.info](https://claudeskills.info/) y [agensi.io](https://agensi.io/)
-- [ ] Plugin marketplace de Claude Code: crear `.claude-plugin/marketplace.json` (lo exige `/plugin marketplace add`; sin él solo funciona el install vía `npx skills add <url> --skill rubber-duck`)
+- [x] Plugin marketplace de Claude Code: `.claude-plugin/marketplace.json` creado (adelantado de Iter 4 a Iter 1 — necesario para que `/rubber-duck` funcione como slash command vía `/plugin install`). El install por `npx skills` solo trae la skill, no los commands
 - [ ] README con benchmarks reales (% de sesiones donde el usuario resuelve sin solución directa)
 - [ ] Ejemplos de conversaciones reales (anonimizados)
 - [ ] Versión ES/EN del README
